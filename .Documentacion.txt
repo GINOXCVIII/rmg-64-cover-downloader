@@ -1,0 +1,69 @@
+# Documentación de este trabajo
+
+Descargador de portadas para el emulador RMG Rosalie's Mupen GUI de Nintendo 64
+    El trabajo original se hace sobre Ubuntu Linux. Más adelante voy a portearlo a Windows. Si es necesario, para otras distro de Linux
+
+Ubuntu
+RMG guarda las portadas de los juegos en [Directorio a la carpeta del emulador]/data/RMG/Covers
+Las portadas se guardan como un archivo de imagen que llevan por nombre [MD5_CHECKSUM_ROM].jpg
+Cada ROM tiene un valor MD5 único.
+Ejemplo:
+    Resident Evil 2 (US): 1ADD2C0217662B307CDFD876B35FBF7A
+    Resident Evil 2 (EU): B04F298721223A22E1150CEBC712EE6A
+
+    Dos juegos tienen diferente suma de comprobación según la región. Distinguir
+
+Cada juego puede tener, generalmente, hasta 3 regiones: US (Norteamérica NTSC-U) EU (Europa PAL) JP (Japón NTSC-J)
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+El programa tiene que poder:
+    0) Verificar las portadas ya existentes en el directorio de portadas del emulador para evitar operaciones de más
+
+    1) Tomar una ROM de un directorio dado
+    2) Identificar qué juego corresponde a esa ROM por medio de su valor MD5. Debe hacer la suma de comprobación MD5 de la ROM .z64 .n64 .v64, no de los .zip o comprimidos. Esos valores corresponden al valor MD5 del propio comprimido y no de la ROM en sí
+        2.b) Si no puede identificar el juego por el MD5 (por tratarse, por ejemplo, de un comprimido), debe poder hacerlo por medio del nombre del archivo
+        2.c) Si se trata de un comprimido, debe poder explorar su interior, encontrar el archivo de ROM válido y verificar valor MD5
+    3) Una vez identificado el juego, debe buscar en una tabla qué imagen de portada corresponde usar
+    4) Descargar la portada de un repositorio (definir)
+    5) Asignar la portada al juego, poninendole a la imagen el nombre adecuado (el valor MD5) y copiarla en el directorio de portadas de RMG
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+¿Formato que usará la tabla que contenga la información del juego y la portada que corresponde?
+    Implemento formato de diccionarios de Python (¿podrías usarse json?)
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+Log 13-01-2025 - 00:37
+    Hecho el archivo que lee un archivo .zip, encuentra roms validas (.z64 .n64 y .v64) y calcula MD5
+    Devuelve una lista de tuplas que contienen ([NOMBRE_ARCHIVO_ROM_VALIDA], [MD5_CHECKSUM_ROM])
+
+Log 13-01-2025 - 02:45
+    Las funciones básicas están
+    hacer una funcion que determine los juegos que ya tienen portadas en el emulador, para no sobreescribir
+    falta crear una repositorio de imagenes y actualizar la base de juegos con todo lo que se tenga
+    las portadas están en local. si las subo a un repositorio, tengo que poder descargarlas y usarlas
+
+Log 15-01-2025 - 2:58
+    Las funciones estan para archivos locales.
+    Agregue varias portadas
+    Ahora, tengo que agregar las que falten y una forma de acceder a ellas de forma remota para no tenerlas en local
+    Buscar una forma para poder manejar varias md5 en un solo registro y si es conveniente
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
